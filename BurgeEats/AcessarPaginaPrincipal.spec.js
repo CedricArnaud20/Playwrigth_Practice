@@ -1,6 +1,8 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
+
+/// Acessar a home páge e deposi acessar o formulário de cadastro 
 test('Deve acessar a página de cadastro', async ({ page }) => {
   
   await page.goto('/');
@@ -16,6 +18,7 @@ test('Deve acessar a página de cadastro', async ({ page }) => {
 })
 
 
+// Acessar o formulário de cadastro e depois voltar para página principal
 test('Deve voltar para home page', async ({page}) => {
 
   await page.goto('/');
