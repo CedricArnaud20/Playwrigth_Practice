@@ -1,35 +1,24 @@
+
 import { test, expect } from '@playwright/test';
 
-
- const dadosCad ={
-    nome :'Cedric Arnaud',
-    cpf:'09846899874',
-    Email :'cedric@gmail.com',
-    whatsapp: '62953655455',
-    Cep: '73255902',
-    numero: '20',
-    Complemento:'Sem complemento'
-
- }
+import dadosCad from '../files/dados.json';
+import { login } from '../pages/SignupPage';
 
 
-// Esse before each basicamente vai sempre acesar o formulário de cadastro antes de cada teste ele provisóario até que faço a cciação do custom commands
-test.beforeEach(async ({ page }) => {
-    await page.goto('/');
 
-    const Titulo = page.locator('h1')
-  
-    await expect(Titulo).toHaveText('Seja um parceiro entregador pela Buger Eats')
 
-    await page.locator('//strong[text()="Cadastre-se para fazer entregas"]').click()
-});
+
+//Esse before each basicamente vai sempre acesar o formulário de cadastro antes de cada teste ele provisóario até que faço a cciação do custom commands
 
 
 test('Validar que o Campo nome é obrigatório', async ({ page }) => {
 
+    await login(page);
+    
+
     //Preenchendo os campos 
   
-    await page.getByPlaceholder('Nome completo').fill(dadosCad.nome)
+    await page.getByPlaceholder('Nome completo').fill('')
 
     await page.getByPlaceholder('CPF somente números').fill(dadosCad.cpf)
 
@@ -43,17 +32,26 @@ test('Validar que o Campo nome é obrigatório', async ({ page }) => {
 
     await page.getByRole('button', { name: 'Buscar CEP' }).click()
 
+    //Preenchendo os campos 
+
     await page.getByPlaceholder('Número', { exact: true }).fill(dadosCad.numero)
 
     await page.getByPlaceholder('Complemento').fill(dadosCad.Complemento)
 
     await page.locator('li').filter({ hasText: 'Moto' }).click()
 
-    await page.locator('button[type="submit"]').click()
+    //Clicar no botão Cadastrase para finalizar o cadastro
 
-    // await page.getByPlaceholder('').fill(dadosCad.)
+     await page.locator('button[type="submit"]').click()
+
+    // await page.getByLabel('Upload file').setInputFiles(path.join(__dirname, 'myfile.pdf'));
+
+
+    await page.getByAltText('É necessário informar o nome').isVisible
 
     
 
     
 });
+
+
